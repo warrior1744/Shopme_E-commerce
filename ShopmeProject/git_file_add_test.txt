@@ -1,2 +1,0 @@
-This is a test for adding file for commit change and push
-modified to test the commit
