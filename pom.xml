@@ -6,4 +6,10 @@
   <packaging>pom</packaging>
   <name>ShopmeProject</name>
   <description>ShopmeProject_Root</description>
+  
+  <modules>
+	 <module>ShopmeCommon</module>
+  </modules>
+  
+  
 </project>
