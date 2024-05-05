@@ -39,4 +39,10 @@ public class UserService{
 		user.setPassword(encodedPassword);
 	}
 	
+	public boolean isEmailUnique(String email) {
+		
+		User userByEmail = userRepo.getUserByEmail(email); //return false if not found
+		return userByEmail == null; //if not found, return true, means it's unique
+	}
+	
 }

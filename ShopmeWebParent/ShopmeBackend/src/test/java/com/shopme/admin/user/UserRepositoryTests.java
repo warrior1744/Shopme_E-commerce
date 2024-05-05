@@ -22,7 +22,7 @@ import com.shopme.common.entity.User;
 public class UserRepositoryTests {
 	
 	@Autowired
-	private UserRepository repo;
+	private UserRepository userRepo;
 	
 	@Autowired
 	private TestEntityManager entityManager;
@@ -34,7 +34,7 @@ public class UserRepositoryTests {
 		User userJim = new User("jim@example.com", "123505079", "jim", "chang");
 		userJim.addRole(roleAdmin);
 		
-		User savedUser = repo.save(userJim);
+		User savedUser = userRepo.save(userJim);
 		assertThat(savedUser.getId()).isGreaterThan(0);
 	}
 	
@@ -47,14 +47,14 @@ public class UserRepositoryTests {
 		userRavi.addRole(roleEditor);
 		userRavi.addRole(roleAssistant);
 		
-		User savedUser = repo.save(userRavi);
+		User savedUser = userRepo.save(userRavi);
 		assertThat(savedUser.getId()).isGreaterThan(0);
 		
 	}
 	
 	@Test
 	public void testListAllUsers() {
-		Iterable<User> listUsers = repo.findAll();
+		Iterable<User> listUsers = userRepo.findAll();
 		listUsers.forEach(user -> { 
 		    System.out.println(user);
 		});
@@ -62,7 +62,7 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void testFindUserById() {
-		User theUser = repo.findById(2).get();
+		User theUser = userRepo.findById(2).get();
 		System.out.println(theUser);
 		assertThat(theUser.getId()).isEqualTo(2);
 	
@@ -70,30 +70,35 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void testUpdateUserDetails() {
-		User userRavi = repo.findById(2).get();
+		User userRavi = userRepo.findById(2).get();
 		userRavi.setEnabled(true);
 		userRavi.setEmail("ravi.chen@example.com");
-		repo.save(userRavi);
+		userRepo.save(userRavi);
 	}
 	
 	@Test
 	public void testUpdateUserRoles() {
-		User userRavi = repo.findById(2).get();
+		User userRavi = userRepo.findById(2).get();
 		Role roleEditor = entityManager.find(Role.class, 3);
 		Role roleSalesperson = entityManager.find(Role.class, 2);
 		userRavi.getRoles().remove(roleEditor);
 		userRavi.addRole(roleSalesperson);
 		
-		repo.save(userRavi);
+		userRepo.save(userRavi);
 	}
 	
 	@Test
 	public void testDeleteUser() {
 		Integer userId = 2;
-		repo.deleteById(userId);
-		
-		repo.findById(userId);
-		
-		
+		userRepo.deleteById(userId);
+		userRepo.findById(userId);
 	}
+	
+	@Test
+	public void testGetUserByEmail() {
+		String email = "ravi@example.com";
+		User user = userRepo.getUserByEmail(email);
+		assertThat(user).isNotNull();
+	}
+	
 }

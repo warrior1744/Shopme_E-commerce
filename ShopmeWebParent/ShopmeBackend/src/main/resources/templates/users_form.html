@@ -20,7 +20,8 @@
 	      method="post" 
 	      style="max-width: 700px; margin: 0 auto"
 	      th:object="${user}"
-	      autocomplete="off">	
+	      autocomplete="off"
+	      onsubmit="return checkEmailUnique(this);">	
 		<div class="border border-secondary rounded p-3">
 			<div class="form-group row">
 				<label class="col-sm-4 col-form-label">E-mail</label>
@@ -80,6 +81,26 @@
 			</div>
 		</div>
 	</form>
+    <!-- Modal Dialog -->	
+	<div class="modal fade text-center" id="modalDialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalTitle">Warning</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+				</div>
+				
+				<div class="modal-body">
+					<span id="modalBody"></span>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	
 	<div th:insert="~{fragments/fragments_footer.html :: footer}"></div>
 </div>
@@ -90,6 +111,34 @@
 			window.location = "[[@{/users}]]";
 		});
 	});
+	
+	function checkEmailUnique(form) {
+		url = "[[@{/users/check_email}]]"
+		userEmail = $("#email").val()
+		csrfValue = $("input[name='_csrf']").val()
+		params = {email: userEmail, _csrf: csrfValue}
+		console.log(params)
+		
+
+		$.post(url, params, function(response){
+			if (response == "OK"){
+				form.submit();
+			}else if (response == "Duplicated"){
+				showModalDialog("Warning", "Duplicated Email "+userEmail+", please choose the other one" )
+			}else {
+				showModalDialog("Error", "Unkown response from server")
+			}
+		}).fail(function() {
+			showModalDialog("Error", "Could not connect to the server")
+		})
+		return false;
+	}
+	
+	function showModalDialog(title, message){
+		$("#modalTitle").text(title)
+		$("#modalBody").text(message)
+		$("#modalDialog").modal('show')
+	}
 </script>
 
 </body>
