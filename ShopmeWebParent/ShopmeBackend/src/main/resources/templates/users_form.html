@@ -6,7 +6,7 @@
 	<title>User Form</title>
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
@@ -76,7 +76,7 @@
 			
 			<div class="text-center">
 			    <input type="submit" value="Save" class="btn btn-primary m-3"/>
-			    <input type="button" value="Cancel" class="btn btn-secondary" />
+			    <input type="button" value="Cancel" class="btn btn-secondary" id="buttonCancel"/>
 			</div>
 		</div>
 	</form>
@@ -84,6 +84,14 @@
 	<div th:insert="~{fragments/fragments_footer.html :: footer}"></div>
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#buttonCancel").on("click", function(){
+			window.location = "[[@{/users}]]";
+		});
+	});
+</script>
 
 </body>
+
 </html>
