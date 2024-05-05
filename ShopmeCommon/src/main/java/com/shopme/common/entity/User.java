@@ -2,16 +2,17 @@ package com.shopme.common.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -119,6 +120,11 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", roles=" + roles + "]";
+	}
+	
+	//This method is to format role collection in users.html to remove []	
+	public String getFormattedRoles() {
+		return roles.stream().map(Role::getName).collect(Collectors.joining(", "));
 	}
 	
 	

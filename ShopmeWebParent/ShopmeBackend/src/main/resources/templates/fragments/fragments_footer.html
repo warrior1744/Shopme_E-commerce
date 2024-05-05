@@ -3,23 +3,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="tet/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>Home - Shopme Admin Control Panel</title>
+	<title>User Page Footer</title>
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-
-<div class="container-fluid">
-	<div th:insert="~{fragments/fragments_nav.html :: nav}"></div>
-	<div>
-		<h1>Shopme Control Panel</h1>
+	<div th:fragment="footer" class="text-center">
+		<p>Shopme Control Panel - Copyright &copy; Shopme</p>
 	</div>
-	
-	<div th:insert="~{fragments/fragments_footer.html :: footer}"></div>
-</div>
-
-
 </body>
 </html>
