@@ -12,11 +12,13 @@
 <body>
 
 <div class="container-fluid">
-	<div th:insert="~{fragments/fragments_nav.html :: nav}"></div>
+	<div th:replace="~{fragments/fragments_nav.html :: nav}"></div>
 	<div>
 		<h1>Shopme Control Panel</h1>
 	</div>
-	
+	<!--  
+    <div th:replace="~{fragments/fragments_test.html :: test(paramTest='this is a changed Title')}"></div>
+	-->
 	<div th:insert="~{fragments/fragments_footer.html :: footer}"></div>
 </div>
 
